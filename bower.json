@@ -1,0 +1,22 @@
+{
+  "name": "tinytip",
+  "version": "0.0.1",
+  "homepage": "http://sweefty.com/tinytip",
+  "authors": [
+    "mamod <mamod.mehyar@gmail.com>"
+  ],
+  "description": "Tiny Tooltip jQuery Plugin",
+  "main": "tinytip.js",
+  "keywords": [
+    "tooltip",
+    "tiny"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
