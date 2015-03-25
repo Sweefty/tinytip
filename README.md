@@ -1,10 +1,10 @@
 # TinyTip
 
-Tiny tooltip jQuery plugin
+Very small tooltip jQuery plugin, No CSS, TinyTip does not force any styling over your tooltips, you can style your tooltips as desired, it also allow you to display any content, texts, html and Dom elements inside your tooltips.
 
   - Very small code with zero magic
   - No CSS file
-  - Tooltip any html element
+  - Tooltip any thing
 
 ### Installation
 
