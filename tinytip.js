@@ -3,7 +3,7 @@
 * MIT Licensed
 * @author Mamod Mehyar
 * http://sweefty.com
-* version : 0.0.2
+* version : 0.0.3
 */
 
 (function($){
@@ -16,15 +16,12 @@
         off : 'mouseleave'
     };
 
-    var lastElement;
-    
-
     var _tooltip = function(ele,obj){
         var _isview = false;
         obj = $.extend({},tooltip_options, obj);
-        var text = obj.tooltip || ele.data('tooltip');
+        var text = ele.data('tinytip') || obj.tooltip;
         var fix = obj.fix || {top: 0, left: 0};
-        
+
         var _preventOnMouseEnter = false;
         var _SW_tooltip = $('<div class="tinytip"></div>').css({
             width : 'auto',
@@ -43,6 +40,14 @@
         if (obj.addClass){
             _SW_tooltip.addClass(obj.addClass);
         }
+
+        if (obj.wrapper){
+            obj.wrapper = $(obj.wrapper);
+            _SW_tooltip.append(obj.wrapper);
+        } else {
+            obj.wrapper = _SW_tooltip;
+        }
+
         if (text || obj.content){
             var fixX = parseInt(fix.left) || 0,
                 fixY = parseInt(fix.top) || 0;
@@ -54,7 +59,7 @@
             }, startY = function(y){
                 return y;
             };
-            
+
             if (obj.animation){
                 if (obj.animation.left){
                     startX = function(x){
@@ -69,7 +74,7 @@
                     };
                 }
             }
-            
+
             var start1,start2;
             var closeTooltip = function(e){
                 if (!_isview && obj.on === obj.off){
@@ -79,7 +84,7 @@
                 e.preventDefault();
                 setTimeout(function(){
                     if (_preventOnMouseEnter && obj.preventClose){
-                        closeTooltip(e); 
+                        closeTooltip(e);
                         return;
                     }
 
@@ -102,7 +107,7 @@
 
             var viewTooltip = function(e){
                 if (e){ e.preventDefault(); }
-                
+
                 if (_isview){
                     if (obj.on === obj.off){
                         closeTooltip(e);
@@ -112,17 +117,17 @@
 
                 if (obj.content){
                     obj.clone = obj.content.clone();
-                    _SW_tooltip.html(obj.clone);
+                    obj.wrapper.html(obj.clone);
                     obj.clone.show();
                 } else if (text){
-                    _SW_tooltip.html(text);
+                    obj.wrapper.html(text);
                 }
 
                 var top = ele.offset().top + fixY;
                 var left = ele.offset().left + fixX;
                 var width = ele.outerWidth();
                 var height = _SW_tooltip.outerHeight();
-                
+
                 if (position == 'bottom'){
                     top = top + ele.outerHeight() + 2;
                     left = left + (width/2);
@@ -135,11 +140,11 @@
                     left = left + (width/2);
                     left = left - (_SW_tooltip.outerWidth()/2);
                     top = top - height - 2;
-                } 
-                
+                }
+
                 start1 = parseFloat(startY(top));
                 start2 = parseFloat(startX(left));
-                
+
                 _SW_tooltip.stop().css({
                     top : start1,
                     left : start2,
@@ -162,14 +167,14 @@
             }
         }
     };
-    
+
     //jQuery custom functions
     $.fn.tinytip = function(text, customOptions) {
         if (text && typeof text === 'object'){
             customOptions = text;
             text = customOptions.tooltip;
         }
-        
+
         var options = $.extend({}, tooltip_options, customOptions);
         options.tooltip = text;
         if (typeof options.tooltip === 'object'){
